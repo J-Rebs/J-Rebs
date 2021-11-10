@@ -1,4 +1,4 @@
-Hello, my name is Joe, and I am currently a student in the Computer Science (CS) MS Bridge Program at Columbia University (https://www.cs.columbia.edu/ms-bridge/). 
+Hello, my name is Joe, and I am currently a student in the Computer Science (CS) Masters (MS) Bridge Program at Columbia University (https://www.cs.columbia.edu/ms-bridge/). 
 My own experience with CS started about a decade ago when I took my first introductory CS course in high school. 
 Along the way, I've studied things like Economics and Spanish, been a teaching assistant, and worked at an accounting firm. 
 
