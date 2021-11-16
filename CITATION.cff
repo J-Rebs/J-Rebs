@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Rebagliati"
+  given-names: "Joe"
+title: "J-Rebs"
+version: 1.0.0
+doi: 10.5281/zenodo.1234
+date-released: 2021-11-16
+url: "https://github.com/J-Rebs/J-Rebs"
