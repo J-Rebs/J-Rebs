@@ -5,6 +5,6 @@ Along the way, I've studied things like Economics and Spanish, been a teaching a
 
 Some programming languages I have experience with include Java, Python, and VBA. In Spring 2022, I will be learning C and SQL, XML, query processing, and some additional networking related skills. 
 
-I also have experience in Mathetimatics including Multivariable Calculus, Linear Algebra, Differential Equations, and Introductory Mathematical Analysis (Metric Spaces, Sets, Sequences, Series, and some Functional Analysis).
+I also have experience in Mathematics including Multivariable Calculus, Linear Algebra, Differential Equations, and Introductory Mathematical Analysis (Metric Spaces, Sets, Sequences, Series, and some Functional Analysis).
 
 If you would like to connect, you can find me on LinkedIn here: https://www.linkedin.com/in/joe-rebagliati-4ab7a488/.  
