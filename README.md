@@ -4,6 +4,6 @@ I'm a current MS in CS at Columbia University with a focus on software systems. 
 
 In my current research and academic pursuits, my goal is to become as knowledgeable as possible in all parts of data management, analysis, and visualization from the perspective of software systems. My hope is to work on helping develop efficient data pipelines and associated visualizations that allow easy, fast extraction of data for analysis.
 
-If that sounds like a fit for a need you have on your team, please reach out to me using the contact information below. My graduation date from my MS is December 2023.
+If that sounds like a fit for a need you have on your team, please reach out to me (see website link for details). My graduation date from my MS is December 2023.
 
 Visit my website for more contact information, a blog, and other details: https://joe-rebagliati.vercel.app/
