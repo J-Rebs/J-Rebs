@@ -352,6 +352,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let autoSpinActive = true;
     let autoSpinTimer = null;
     let activeNodeId = 'pnw';
+    let targetRotation = null;
+    const isTouchDevice = ('ontouchstart' in window || navigator.maxTouchPoints > 0);
+    const hitRadius = isTouchDevice ? 24 : 11;
 
     // Coordinates of Resume Pins (Longitude, Latitude) with custom label offsets for spacing
     const pins = [
@@ -419,6 +422,60 @@ document.addEventListener('DOMContentLoaded', () => {
         detailsCard.style.opacity = '1';
         detailsCard.style.transform = 'translateY(0)';
       }, 150);
+    }
+
+    function selectNode(nodeId) {
+      activeNodeId = nodeId;
+      updateNodeDetails(nodeId);
+
+      // Highlight the corresponding chip
+      const chips = document.querySelectorAll('.globe-chip');
+      chips.forEach(chip => {
+        if (chip.getAttribute('data-node-id') === nodeId) {
+          chip.classList.add('active');
+        } else {
+          chip.classList.remove('active');
+        }
+      });
+
+      // Target projection rotation
+      const pin = pins.find(p => p.id === nodeId);
+      if (pin) {
+        const targetLambda = pin.lon * Math.PI / 180;
+        const targetPhi = pin.lat * Math.PI / 180;
+
+        // Find the shortest rotation delta to prevent multi-spin jitter
+        let diff = (targetLambda - rotation.lambda) % (2 * Math.PI);
+        if (diff < -Math.PI) diff += 2 * Math.PI;
+        if (diff > Math.PI) diff -= 2 * Math.PI;
+
+        targetRotation = {
+          lambda: rotation.lambda + diff,
+          phi: targetPhi
+        };
+
+        autoSpinActive = false;
+        clearTimeout(autoSpinTimer);
+        autoSpinTimer = setTimeout(() => {
+          autoSpinActive = true;
+        }, 8000);
+      }
+    }
+
+    // Dynamic generation of navigation chips
+    const chipsContainer = document.getElementById('globe-navigation-chips');
+    if (chipsContainer) {
+      chipsContainer.innerHTML = '';
+      pins.forEach(p => {
+        const chip = document.createElement('button');
+        chip.className = `globe-chip ${p.id === activeNodeId ? 'active' : ''}`;
+        chip.setAttribute('data-node-id', p.id);
+        chip.textContent = p.label;
+        chip.addEventListener('click', () => {
+          selectNode(p.id);
+        });
+        chipsContainer.appendChild(chip);
+      });
     }
 
     // Load offline TopoJSON map
@@ -646,7 +703,7 @@ document.addEventListener('DOMContentLoaded', () => {
               if (cosDot > 0 && distance < r) {
                 const hx = mouseX - x;
                 const hy = mouseY - y;
-                if (Math.sqrt(hx * hx + hy * hy) < 11) {
+                if (Math.sqrt(hx * hx + hy * hy) < hitRadius) {
                   isHoveringNode = true;
                 }
               }
@@ -679,22 +736,112 @@ document.addEventListener('DOMContentLoaded', () => {
             if (cosDot > 0 && distance < r) {
               const hx = mouseX - x;
               const hy = mouseY - y;
-              if (Math.sqrt(hx * hx + hy * hy) < 11) {
+              if (Math.sqrt(hx * hx + hy * hy) < hitRadius) {
                 clickedPin = p;
               }
             }
           });
 
           if (clickedPin) {
-            activeNodeId = clickedPin.id;
-            updateNodeDetails(clickedPin.id);
+            selectNode(clickedPin.id);
             drawGlobe();
           }
         });
 
-        // Slow, calm spin animation loop
+        // Touch Interaction Support for mobile (no scroll lock)
+        canvas.addEventListener('touchstart', (e) => {
+          if (e.touches.length !== 1) return;
+          
+          isDragging = true;
+          autoSpinActive = false;
+          targetRotation = null; // stop any active auto centering
+          
+          const touch = e.touches[0];
+          previousMousePosition = { x: touch.clientX, y: touch.clientY };
+          
+          // Tap pin detection on touch start
+          const rect = canvas.getBoundingClientRect();
+          const touchX = touch.clientX - rect.left;
+          const touchY = touch.clientY - rect.top;
+          
+          let tappedPin = null;
+          pins.forEach(p => {
+            const { x, y } = projectD3(p.lon, p.lat);
+            const dx = x - cx;
+            const dy = y - cy;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            const rotatedCoords = projection.rotate();
+            const rLon = -rotatedCoords[0] * Math.PI / 180;
+            const rLat = -rotatedCoords[1] * Math.PI / 180;
+            const pLon = p.lon * Math.PI / 180;
+            const pLat = p.lat * Math.PI / 180;
+            
+            const cosDot = Math.sin(pLat) * Math.sin(rLat) + 
+                          Math.cos(pLat) * Math.cos(rLat) * Math.cos(pLon - rLon);
+
+            if (cosDot > 0 && distance < r) {
+              const hx = touchX - x;
+              const hy = touchY - y;
+              if (Math.sqrt(hx * hx + hy * hy) < hitRadius) {
+                tappedPin = p;
+              }
+            }
+          });
+          
+          if (tappedPin) {
+            selectNode(tappedPin.id);
+            drawGlobe();
+          }
+        }, { passive: true });
+
+        canvas.addEventListener('touchmove', (e) => {
+          if (!isDragging || e.touches.length !== 1) return;
+          
+          const touch = e.touches[0];
+          const deltaX = touch.clientX - previousMousePosition.x;
+          const deltaY = touch.clientY - previousMousePosition.y;
+
+          // Rotation in radians
+          rotation.lambda += deltaX * 0.004;
+          rotation.phi += deltaY * 0.004;
+
+          // Prevent flipping upside down
+          rotation.phi = Math.max(-Math.PI / 2.2, Math.min(Math.PI / 2.2, rotation.phi));
+
+          // Sync with projection rotation
+          projection.rotate([-rotation.lambda * 180 / Math.PI, -rotation.phi * 180 / Math.PI]);
+
+          previousMousePosition = { x: touch.clientX, y: touch.clientY };
+          drawGlobe();
+        }, { passive: true });
+
+        canvas.addEventListener('touchend', () => {
+          isDragging = false;
+          clearTimeout(autoSpinTimer);
+          autoSpinTimer = setTimeout(() => {
+            autoSpinActive = true;
+          }, 4000);
+        });
+
+        // Slow, calm spin animation loop with lerped centering transitions
         function animate() {
-          if (autoSpinActive) {
+          if (targetRotation) {
+            const speed = 0.08;
+            rotation.lambda += (targetRotation.lambda - rotation.lambda) * speed;
+            rotation.phi += (targetRotation.phi - rotation.phi) * speed;
+
+            // Snap when very close
+            if (Math.abs(targetRotation.lambda - rotation.lambda) < 0.001 &&
+                Math.abs(targetRotation.phi - rotation.phi) < 0.001) {
+              rotation.lambda = targetRotation.lambda;
+              rotation.phi = targetRotation.phi;
+              targetRotation = null;
+            }
+
+            projection.rotate([-rotation.lambda * 180 / Math.PI, -rotation.phi * 180 / Math.PI]);
+            drawGlobe();
+          } else if (autoSpinActive) {
             rotation.lambda += 0.0015;
             projection.rotate([-rotation.lambda * 180 / Math.PI, -rotation.phi * 180 / Math.PI]);
             drawGlobe();
