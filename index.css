@@ -230,6 +230,7 @@ h1, h2, h3, h4 {
   font-size: 0.9rem;
   font-weight: 500;
   color: var(--text-secondary);
+  white-space: nowrap; /* Prevent menu items from wrapping */
 }
 
 .nav-link:hover {
@@ -246,6 +247,7 @@ h1, h2, h3, h4 {
   font-weight: 500;
   box-shadow: var(--shadow-flat);
   transition: var(--transition-smooth);
+  white-space: nowrap; /* Prevent button text wrapping */
 }
 
 .btn-primary-sm:hover {
@@ -1456,7 +1458,16 @@ h1, h2, h3, h4 {
 /* ==========================================================================
    RESPONSIVENESS & MEDIA QUERIES
    ========================================================================== */
+@media (max-width: 1200px) {
+  .main-nav {
+    gap: 1.25rem; /* Compress navigation gap to save horizontal space on intermediate desktop widths */
+  }
+}
+
 @media (max-width: 1024px) {
+  .main-nav {
+    display: none; /* Hide navigation items on tablet and mobile viewports to prevent collisions */
+  }
   .hero-container {
     grid-template-columns: 1fr;
     gap: 3.5rem;
