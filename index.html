@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Joseph Rebagliati | Senior Backend & Platform Engineer</title>
+  <meta name="description"
+    content="Senior Platform & Backend Engineer specializing in resilient systems, high-throughput AWS APIs, event-driven pipelines, and observable infrastructure.">
+
+  <!-- Modern Editorial Typography from Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet">
+
+  <!-- D3.js and TopoJSON CDN for realistic globe -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
+  <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+
+  <!-- Header Navigation -->
+  <header class="app-header">
+    <div class="header-container">
+      <a href="#" class="brand-logo-ticker" id="nav-logo" aria-label="Joseph Rebagliati Homepage">
+        <span class="ticker-label">NEXT DESTINATION</span>
+        <div class="ticker-board">
+          <div class="ticker-row">
+            <span class="flap" data-target="J">J</span>
+            <span class="flap" data-target="O">O</span>
+            <span class="flap" data-target="S">S</span>
+            <span class="flap" data-target="E">E</span>
+            <span class="flap" data-target="P">P</span>
+            <span class="flap" data-target="H">H</span>
+          </div>
+          <div class="ticker-row">
+            <span class="flap" data-target="R">R</span>
+            <span class="flap" data-target="E">E</span>
+            <span class="flap" data-target="B">B</span>
+            <span class="flap" data-target="A">A</span>
+            <span class="flap" data-target="G">G</span>
+            <span class="flap" data-target="L">L</span>
+            <span class="flap" data-target="I">I</span>
+            <span class="flap" data-target="A">A</span>
+            <span class="flap" data-target="T">T</span>
+            <span class="flap" data-target="I">I</span>
+          </div>
+        </div>
+      </a>
+      <nav class="main-nav" aria-label="Main Navigation">
+        <a href="#journey" class="nav-link" id="link-journey">Journey Map</a>
+        <a href="#skills" class="nav-link" id="link-skills">Skills</a>
+        <a href="#experience" class="nav-link" id="link-experience">Experience</a>
+        <a href="#telemetry" class="nav-link" id="link-telemetry">Telemetry</a>
+        <a href="#interests" class="nav-link" id="link-interests">Beyond the Terminal</a>
+        <a href="#achievements" class="nav-link" id="link-achievements">Credentials</a>
+      </nav>
+      <div class="header-cta">
+        <a href="#contact" class="btn-primary-sm" id="btn-header-contact">Get in Touch</a>
+      </div>
+    </div>
+    <!-- Beautiful Mediterranean blue/gold patterned tile ribbon -->
+    <div class="tile-ribbon"></div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero-section" id="about">
+      <div class="hero-container">
+        <div class="hero-content">
+          <div class="status-badge" id="hero-status-pill">
+            <span class="status-dot pulsing"></span>
+            <span class="status-label">Currently Engineering High-Scale Platform Systems</span>
+          </div>
+
+          <h1 class="hero-title" id="main-headline">
+            I build backend platforms that do <span class="text-highlight">what you want</span>, where you can trace the
+            journey from input to output.
+          </h1>
+
+          <p class="hero-subtitle">
+            Software Engineer specializing in compliance-critical APIs, event-driven messaging, and
+            cloud services processing millions of monthly transactions.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#experience" class="btn-primary" id="btn-hero-explore">Explore Systems</a>
+            <a href="#contact" class="btn-secondary" id="btn-hero-contact">Direct Contact</a>
+          </div>
+        </div>
+
+        <!-- Interactive Telemetry Console / Failover Simulator -->
+        <div class="telemetry-wrapper" id="telemetry">
+          <div class="telemetry-card">
+            <div class="card-header">
+              <div class="card-title-group">
+                <span class="terminal-dot red"></span>
+                <span class="terminal-dot yellow"></span>
+                <span class="terminal-dot green"></span>
+                <span class="card-title">SYSTEMS MONITOR v2.6.5</span>
+              </div>
+              <span class="card-badge" id="telemetry-clock">12:00:00 UTC</span>
+            </div>
+
+            <div class="card-body">
+              <div class="metrics-grid">
+                <div class="metric-box">
+                  <span class="metric-label">MONTHLY VOLUME</span>
+                  <span class="metric-value" id="metric-messages">0</span>
+                  <span class="metric-sub">AWS Spring Boot Platform</span>
+                </div>
+                <div class="metric-box">
+                  <span class="metric-label">LOAD TEST PEAK</span>
+                  <span class="metric-value" id="metric-tps">0</span>
+                  <span class="metric-sub">Perf Test</span>
+                </div>
+                <div class="metric-box">
+                  <span class="metric-label">AWS FAILOVER RTO</span>
+                  <span class="metric-value text-amber" id="metric-rto">&lt; 20m</span>
+                  <span class="metric-sub">Tested in Production</span>
+                </div>
+              </div>
+
+              <!-- Map Visualization -->
+              <div class="failover-map-container">
+                <div class="map-label">AWS ACTIVE-PASSIVE MULTI-REGION PIPELINE</div>
+                <div class="pipeline-visual">
+                  <div class="region-node active" id="region-east">
+                    <span class="node-pulse"></span>
+                    <span class="node-name">us-east-1</span>
+                    <span class="node-status" id="status-east">ACTIVE</span>
+                  </div>
+
+                  <div class="pipeline-flow-path">
+                    <svg width="100%" height="20" class="flow-svg">
+                      <line x1="0" y1="10" x2="100%" y2="10" class="flow-line-bg" />
+                      <line x1="0" y1="10" x2="100%" y2="10" class="flow-line-active" id="flow-line" />
+                    </svg>
+                  </div>
+
+                  <div class="region-node standby" id="region-west">
+                    <span class="node-pulse invisible" id="pulse-west"></span>
+                    <span class="node-name">us-west-2</span>
+                    <span class="node-status" id="status-west">STANDBY</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Interactive Controls -->
+              <div class="telemetry-controls">
+                <button class="btn-action-glow" id="btn-trigger-failover">
+                  <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 100-6 3 3 0 000 6z" />
+                  </svg>
+                  Simulate Live Regional Failover
+                </button>
+                <div class="status-msg" id="failover-status-msg">Click button to trigger failure and re-route traffic
+                </div>
+              </div>
+
+              <!-- Diagnostic Logs -->
+              <div class="terminal-logs">
+                <div class="log-line" id="log-line-1"><span class="log-timestamp">[12:00:25]</span> <span class="log-tag tag-info">INFO</span> Dual-write synchronization active across active DynamoDB stores.</div>
+                <div class="log-line" id="log-line-2"><span class="log-timestamp">[12:00:25]</span> <span class="log-tag tag-info">INFO</span> Spring Boot deduplication API returning use-case-aware responses.</div>
+                <div class="log-line" id="log-line-3"><span class="log-timestamp">[12:00:25]</span> <span class="log-tag tag-success">OK</span> Splunk dashboards synchronized. New Relic reporting 100% endpoint accessibility.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Journey Map Section -->
+    <section class="journey-map-section" id="journey">
+      <div class="section-container">
+        <div class="section-header text-center">
+          <h2 class="section-title">A Developer's Journey</h2>
+          <p class="section-desc">
+            Here you can trace my own journey from input to output as a software engineer.
+          </p>
+        </div>
+
+        <div class="map-layout-stack">
+          <!-- Top: Styled Geographical 3D Globe (Full Width + Interactive) -->
+          <div class="map-container-box">
+            <div class="globe-wrapper">
+              <canvas id="globe-canvas" width="650" height="380" class="globe-canvas"></canvas>
+              <div class="globe-instructions">← Drag to rotate globe | Click pins to explore →</div>
+            </div>
+          </div>
+
+          <!-- Bottom: Dynamic Details Card Panel (Horizontal Multi-Column) -->
+          <div class="map-details-box">
+            <div class="details-paper-card" id="map-node-details">
+              <div class="details-card-column col-left">
+                <span class="details-tag" id="details-node-tag">ORIGIN</span>
+                <h3 class="details-title" id="details-node-title">Pacific Northwest</h3>
+              </div>
+              <div class="details-card-column col-center">
+                <p class="details-text" id="details-node-text">
+                  I grew up in Portland and Seattle, spending my time rowing on the water, enjoying the mountains, and taking road trips down to California.
+                </p>
+              </div>
+              <div class="details-card-column col-right">
+                <div class="details-meta">
+                  <span class="meta-item" id="details-node-meta">📍 Roots</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Technical Skills Section -->
+    <section class="skills-section" id="skills">
+      <div class="section-container">
+        <div class="section-header">
+          <h2 class="section-title">Core Competencies</h2>
+          <p class="section-desc">Filtered by practical usage in high-volume, compliant platform services.</p>
+        </div>
+
+        <div class="skills-filter-container">
+          <button class="filter-tab active" data-filter="all" id="tab-skill-all">All Skills</button>
+          <button class="filter-tab" data-filter="languages" id="tab-skill-lang">Languages</button>
+          <button class="filter-tab" data-filter="cloud" id="tab-skill-cloud">Cloud & Infrastructure</button>
+          <button class="filter-tab" data-filter="tools" id="tab-skill-tools">Frameworks & Tools</button>
+          <button class="filter-tab" data-filter="practices" id="tab-skill-practices">Practices</button>
+        </div>
+
+        <div class="skills-grid" id="skills-display-grid">
+          <!-- Languages -->
+          <div class="skill-card" data-category="languages">
+            <div class="skill-icon-group">
+              <span class="skill-icon">☕</span>
+              <h3 class="skill-card-title">Java</h3>
+            </div>
+            <p class="skill-card-desc">The core language of my development, used to build high-scale microservices.</p>
+          </div>
+          <div class="skill-card" data-category="languages">
+            <div class="skill-icon-group">
+              <span class="skill-icon">🐍</span>
+              <h3 class="skill-card-title">Python</h3>
+            </div>
+            <p class="skill-card-desc">Used for webhook integrations, automation scripts, and processing data analytics pipelines.</p>
+          </div>
+          <div class="skill-card" data-category="languages">
+            <div class="skill-icon-group">
+              <span class="skill-icon">⚡</span>
+              <h3 class="skill-card-title">TypeScript / JS</h3>
+            </div>
+            <p class="skill-card-desc">Used for building server-side APIs, webhook integrations, Convex integrations, and interactive user interfaces.</p>
+          </div>
+          <div class="skill-card" data-category="languages">
+            <div class="skill-icon-group">
+              <span class="skill-icon">🛢️</span>
+              <h3 class="skill-card-title">SQL</h3>
+            </div>
+            <p class="skill-card-desc">A core competency for structured querying, transactional validation, database schemas, and performance optimization on relational databases.</p>
+          </div>
+
+          <!-- Cloud & Infra -->
+          <div class="skill-card" data-category="cloud">
+            <div class="skill-icon-group">
+              <span class="skill-icon">☁️</span>
+              <h3 class="skill-card-title">AWS ECS & Fargate</h3>
+            </div>
+            <p class="skill-card-desc">Container orchestration, scalable service deployments, and high-availability platform infrastructure.</p>
+          </div>
+          <div class="skill-card" data-category="cloud">
+            <div class="skill-icon-group">
+              <span class="skill-icon">⚡</span>
+              <h3 class="skill-card-title">AWS Lambda</h3>
+            </div>
+            <p class="skill-card-desc">Serverless computing and event-driven integrations.</p>
+          </div>
+          <div class="skill-card" data-category="cloud">
+            <div class="skill-icon-group">
+              <span class="skill-icon">🌐</span>
+              <h3 class="skill-card-title">AWS API Gateway</h3>
+            </div>
+            <p class="skill-card-desc">Designing secure, compliance-critical API endpoints, request routing, and granular access gates.</p>
+          </div>
+          <div class="skill-card" data-category="cloud">
+            <div class="skill-icon-group">
+              <span class="skill-icon">🗄️</span>
+              <h3 class="skill-card-title">AWS Aurora & RDS</h3>
+            </div>
+            <p class="skill-card-desc">Relational database hosting, automated backups, and scalable PostgreSQL/MySQL instance clusters.</p>
+          </div>
+          <div class="skill-card" data-category="cloud">
+            <div class="skill-icon-group">
+              <span class="skill-icon">🪵</span>
+              <h3 class="skill-card-title">Kafka Streams</h3>
+            </div>
+            <p class="skill-card-desc">Designing, maintaining, and load-testing event-driven messaging pipelines.</p>
+          </div>
+          <div class="skill-card" data-category="cloud">
+            <div class="skill-icon-group">
+              <span class="skill-icon">⚡</span>
+              <h3 class="skill-card-title">DynamoDB</h3>
+            </div>
+            <p class="skill-card-desc">NoSQL structures used for ultra-low latency deduplication APIs and live migration dual-write mechanisms.</p>
+          </div>
+
+          <!-- Frameworks & Tools -->
+          <div class="skill-card" data-category="tools">
+            <div class="skill-icon-group">
+              <span class="skill-icon">🍃</span>
+              <h3 class="skill-card-title">Spring Boot</h3>
+            </div>
+            <p class="skill-card-desc">The standard framework for secure, resilient, multi-tenant enterprise microservices.</p>
+          </div>
+          <div class="skill-card" data-category="tools">
+            <div class="skill-icon-group">
+              <span class="skill-icon">🔍</span>
+              <h3 class="skill-card-title">OpenTelemetry / New Relic</h3>
+            </div>
+            <p class="skill-card-desc">Implementing distributed tracing and platform-level alerting across complex microservices.</p>
+          </div>
+          <div class="skill-card" data-category="tools">
+            <div class="skill-icon-group">
+              <span class="skill-icon">📊</span>
+              <h3 class="skill-card-title">Splunk</h3>
+            </div>
+            <p class="skill-card-desc">Analyzing high-volume production logs, diagnosing pipeline failures, and constructing real-time operations dashboards.</p>
+          </div>
+
+          <!-- Practices -->
+          <div class="skill-card" data-category="practices">
+            <div class="skill-icon-group">
+              <span class="skill-icon">🗺️</span>
+              <h3 class="skill-card-title">REST API Design</h3>
+            </div>
+            <p class="skill-card-desc">Designing compliance-critical APIs, granular querying models, and secure
+              authorization gates.</p>
+          </div>
+          <div class="skill-card" data-category="practices">
+            <div class="skill-icon-group">
+              <span class="skill-icon">⚙️</span>
+              <h3 class="skill-card-title">CI/CD & Migrations</h3>
+            </div>
+            <p class="skill-card-desc">Zero-downtime database and AWS account migrations, automating Jenkins deployment
+              pipelines.</p>
+          </div>
+          <div class="skill-card" data-category="practices">
+            <div class="skill-icon-group">
+              <span class="skill-icon">🛡️</span>
+              <h3 class="skill-card-title">Observability & Resilience</h3>
+            </div>
+            <p class="skill-card-desc">Running real-time production regional failover exercises and writing postmortems
+              to protect uptime.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience Section (Timeline) -->
+    <section class="experience-section" id="experience">
+      <div class="section-container">
+        <div class="section-header">
+          <h2 class="section-title">Systems & Experience</h2>
+          <p class="section-desc">A career built around engineering high-scale microservices, data pipelines, and cloud platforms.</p>
+        </div>
+
+        <div class="timeline">
+
+          <!-- Capital One Senior -->
+          <div class="timeline-item" id="exp-capital-one-sr">
+            <div class="timeline-date">Feb 2025 - Present</div>
+            <div class="timeline-content">
+              <div class="content-header">
+                <h3 class="role-title">Senior Associate Software Engineer</h3>
+                <span class="company-tag">Capital One</span>
+              </div>
+              <div class="team-sub">Multi-Tenant Communication Platform | Dallas, TX</div>
+              <p class="timeline-summary">
+                Serve as a core engineer on a critical enterprise backend communication platform processing
+                <strong>3,000,000+ monthly messages</strong> across Java and Spring Boot microservices.
+              </p>
+              <ul class="bullet-list">
+                <li><strong>Production Failover:</strong> Led a live production regional failover exercise, verifying a
+                  sub-20 minute recovery time objective (RTO) and system durability against cloud infrastructure
+                  outages.</li>
+                <li><strong>Deduplication API:</strong> Designed and shipped a configuration-driven deduplication API
+                  for compliance-critical message flows, replacing complex legacy configurations with a precise,
+                  use-case-aware approach.</li>
+                <li><strong>AWS Cross-Account Migration:</strong> Orchestrated a zero-downtime, secure cross-account AWS
+                  migration of 5 active codebases and databases, using a dual-write sync strategy to safeguard DynamoDB
+                  data consistency.</li>
+                <li><strong>API Performance Tuning:</strong> Re-engineered data-fetching architecture to support
+                  high-granularity query formats on a core endpoint receiving <strong>3,500,000+ monthly
+                    requests</strong>.</li>
+                <li><strong>Technical Postmortems:</strong> Facilitated sprint retrospectives and led the first
+                  comprehensive technical postmortem for a deduplication migration, defining standard protocols for
+                  downstream dependency mapping.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Capital One Associate -->
+          <div class="timeline-item" id="exp-capital-one-assoc">
+            <div class="timeline-date">Feb 2024 - Feb 2025</div>
+            <div class="timeline-content">
+              <div class="content-header">
+                <h3 class="role-title">Associate Software Engineer</h3>
+                <span class="company-tag">Capital One</span>
+              </div>
+              <div class="team-sub">Internal Developer Platform | Dallas, TX</div>
+              <p class="timeline-summary">
+                Supported enterprise-level infrastructure services, ensuring high security standards and core access
+                reliability for inside platform engineers.
+              </p>
+              <ul class="bullet-list">
+                <li><strong>App Maintenance:</strong> Managed vulnerability patches and Spring Boot upgrades across 20+
+                  active internal business applications.</li>
+                <li><strong>Endpoint Migration:</strong> Supported migration of core enterprise integrations,
+                  successfully preserving structural API metadata access for over 1,000 developers.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Columbia / Intern -->
+          <div class="timeline-item" id="exp-columbia">
+            <div class="timeline-date">May 2022 - Dec 2023</div>
+            <div class="timeline-content">
+              <div class="content-header">
+                <h3 class="role-title">Software Engineering Intern / RA</h3>
+                <span class="company-tag">Columbia University DESDR</span>
+              </div>
+              <div class="team-sub">Climate Systems Research | New York, NY</div>
+              <p class="timeline-summary">
+                Contributed to open-source climate calibration tooling designed to structure complex environmental
+                telemetry.
+              </p>
+              <ul class="bullet-list">
+                <li><strong>Interactive Tooling:</strong> Shipped features for an interactive rain and vegetation
+                  indexing simulation tool used by global stakeholders to adjust and calibrate payout insurance
+                  thresholds across multiple countries.</li>
+                <li><strong>Education:</strong> Concurrently completed <strong>M.S. in Computer Science</strong> at
+                  Columbia University.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Howey AI -->
+          <div class="timeline-item" id="exp-howey-ai">
+            <div class="timeline-date">Mar 2023 - Jun 2023</div>
+            <div class="timeline-content">
+              <div class="content-header">
+                <h3 class="role-title">Contract Software Engineer</h3>
+                <span class="company-tag">Howey-AI</span>
+              </div>
+              <div class="team-sub">Remote | New York, NY</div>
+              <ul class="bullet-list">
+                <li><strong>Ingestion Engine:</strong> Engineered a high-efficiency MVP GitHub Ingestion Engine to
+                  automatically ingest, map, and analyze large-scale code structures (e.g., 1,000+ commit pages) using
+                  Convex scheduling and Python backend workers.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- EY Transfer Pricing -->
+          <div class="timeline-item" id="exp-ey">
+            <div class="timeline-date">Jul 2018 - Jun 2021</div>
+            <div class="timeline-content">
+              <div class="content-header">
+                <h3 class="role-title">Senior Transfer Pricing Consultant</h3>
+                <span class="company-tag">Ernst & Young (EY)</span>
+              </div>
+              <div class="team-sub">Financial Systems Advisory | Chicago, IL</div>
+              <p class="timeline-summary">
+                Analyzed and ordered complex intercompany financial structures and cross-border cash flows for major
+                enterprise clients.
+              </p>
+              <ul class="bullet-list">
+                <li><strong>Automation project:</strong> Developed a client automation utility for a Fortune 500 entity,
+                  significantly speeding up manual verification runs.</li>
+                <li><strong>Global Coordination:</strong> Managed documentation streams across global EY locations,
+                  leading progress reports and mentoring junior team members.</li>
+                <li><strong>Education:</strong> Concurrently holding <strong>B.A. in International Economics</strong>
+                  (Magna Cum Laude) from the University of Notre Dame.</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Beyond the Terminal (Interests Deck) Section -->
+    <section class="interests-section" id="interests">
+      <div class="section-container">
+        <div class="section-header text-center">
+          <h2 class="section-title">Beyond the Terminal</h2>
+          <p class="section-desc">A tactile stack of the things that keep life balanced outside of work. Click the deck or shuffle button to browse.</p>
+        </div>
+
+        <div class="deck-wrapper">
+          <div class="deck-container" id="interests-deck" aria-label="Tactile shuffle deck of hobbies">
+            <!-- Cooking Card -->
+            <div class="deck-card" style="--rand-rot: -2.5deg; --rand-dx: -3px; --rand-dy: -2px;">
+              <span class="card-emoji">🍳</span>
+              <h3 class="card-label">Cooking</h3>
+            </div>
+
+            <!-- Podcasts Card -->
+            <div class="deck-card" style="--rand-rot: 3.2deg; --rand-dx: 4px; --rand-dy: 1px;">
+              <span class="card-emoji">🎙️</span>
+              <h3 class="card-label">Podcasts</h3>
+            </div>
+
+            <!-- Comedy Card -->
+            <div class="deck-card" style="--rand-rot: -1.2deg; --rand-dx: -2px; --rand-dy: 3px;">
+              <span class="card-emoji">🎭</span>
+              <h3 class="card-label">Comedy</h3>
+            </div>
+
+            <!-- Coffee Card -->
+            <div class="deck-card" style="--rand-rot: 2.4deg; --rand-dx: 3px; --rand-dy: -1px;">
+              <span class="card-emoji">☕</span>
+              <h3 class="card-label">Coffee</h3>
+            </div>
+
+            <!-- Road Trips Card -->
+            <div class="deck-card" style="--rand-rot: -3.5deg; --rand-dx: -4px; --rand-dy: 2px;">
+              <span class="card-emoji">🚗</span>
+              <h3 class="card-label">Road Trips</h3>
+            </div>
+          </div>
+
+          <!-- Shuffle CTA Button -->
+          <button class="btn-action-glow btn-shuffle" id="btn-shuffle-deck">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3 3L21 5" />
+            </svg>
+            Shuffle Deck
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Credentials & Achievements Section -->
+    <section class="achievements-section" id="achievements">
+      <div class="section-container">
+        <div class="section-header">
+          <h2 class="section-title">Credentials & Achievements</h2>
+          <p class="section-desc">Certified engineering standards and hackathon recognitions.</p>
+        </div>
+
+        <div class="achievements-grid">
+          <!-- AWS Certification Card -->
+          <div class="achievement-card">
+            <div class="achievement-badge-container">
+              <span class="achievement-badge-icon">🛡️</span>
+            </div>
+            <div class="achievement-info">
+              <span class="achievement-tag">CREDENTIAL</span>
+              <h3 class="achievement-title">AWS Certified Solutions Architect – Associate</h3>
+              <p class="achievement-desc">A standard industry certification covering core AWS services, IAM security policies, VPC networking, and common cloud architectural patterns.</p>
+            </div>
+          </div>
+
+          <!-- Hackathon Achievement Card -->
+          <div class="achievement-card">
+            <div class="achievement-badge-container">
+              <span class="achievement-badge-icon">🏆</span>
+            </div>
+            <div class="achievement-info">
+              <span class="achievement-tag">HACKATHON ACHIEVEMENT</span>
+              <h3 class="achievement-title">HoyaHacks Game Category Winner</h3>
+              <p class="achievement-desc">Created <strong>Cryptopoly</strong>, a dynamic gamified cryptocurrency trading experience powered by Python data-scraping workers hosted on Google Compute Engine.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact & Direct Actions -->
+    <section class="contact-section" id="contact">
+      <div class="section-container">
+        <div class="contact-box">
+          <h2 class="contact-title">Let's Connect</h2>
+
+          <div class="contact-grid">
+            <!-- Email -->
+            <button class="contact-item-btn" id="btn-copy-email" data-clipboard="jr4162@columbia.edu"
+              aria-label="Copy email address">
+              <span class="contact-icon">📧</span>
+              <div class="contact-info">
+                <span class="contact-label">EMAIL ADDRESS</span>
+                <span class="contact-value">jr4162@columbia.edu</span>
+              </div>
+              <span class="copy-indicator" id="copy-email-status">Copy</span>
+            </button>
+
+            <!-- LinkedIn -->
+            <a href="https://linkedin.com/in/joe-rebagliati" target="_blank" rel="noopener noreferrer"
+              class="contact-item-btn" id="btn-link-linkedin" aria-label="Open LinkedIn Profile">
+              <span class="contact-icon">🔗</span>
+              <div class="contact-info">
+                <span class="contact-label">LINKEDIN</span>
+                <span class="contact-value">linkedin.com/in/joe-rebagliati</span>
+              </div>
+              <span class="copy-indicator">Visit ↗</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <div class="footer-container">
+      <p class="footer-copy">Made by Antigravity | Conducted by Joe</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
