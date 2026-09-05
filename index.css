@@ -1395,19 +1395,23 @@ h1, h2, h3, h4 {
   align-items: center;
   gap: 0.45rem;
   margin: 0;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
-.pride-flag {
+.pride-flag,
+.texas-flag {
   display: inline-block;
   vertical-align: middle;
   border-radius: 2px;
   overflow: hidden;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.12);
   transition: transform 0.2s ease;
   flex-shrink: 0;
 }
 
-.pride-flag:hover {
+.pride-flag:hover,
+.texas-flag:hover {
   transform: scale(1.15);
 }
 
