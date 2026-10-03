@@ -269,13 +269,13 @@ h1, h2, h3, h4 {
   border-radius: 8px;
   font-weight: 600;
   font-size: 0.95rem;
-  box-shadow: 0 2px 4px rgba(189, 89, 60, 0.12);
+  box-shadow: 0 2px 4px rgba(32, 64, 96, 0.15);
   transition: var(--transition-smooth);
 }
 
 .btn-primary:hover {
-  background: #aa4d32;
-  box-shadow: 0 4px 10px rgba(189, 89, 60, 0.2);
+  background: #15304b;
+  box-shadow: 0 4px 10px rgba(32, 64, 96, 0.22);
 }
 
 .btn-secondary {
@@ -701,12 +701,12 @@ h1, h2, h3, h4 {
 }
 
 .tag-warn {
-  background: rgba(189, 89, 60, 0.12);
+  background: rgba(69, 44, 60, 0.12);
   color: var(--status-red);
 }
 
 .tag-error {
-  background: rgba(189, 89, 60, 0.18);
+  background: rgba(69, 44, 60, 0.18);
   color: var(--status-red);
 }
 
@@ -961,7 +961,7 @@ h1, h2, h3, h4 {
 }
 
 .filter-tab.active {
-  background: rgba(189, 89, 60, 0.08);
+  background: rgba(32, 64, 96, 0.08);
   border-color: var(--accent-amber);
   color: var(--accent-amber);
 }
@@ -1274,7 +1274,7 @@ h1, h2, h3, h4 {
 
 .contact-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 1.25rem;
   margin-bottom: 3rem;
 }
@@ -1329,8 +1329,8 @@ h1, h2, h3, h4 {
   font-family: var(--font-mono);
   font-size: 0.65rem;
   color: var(--accent-amber);
-  background: rgba(189, 89, 60, 0.06);
-  border: 1px solid rgba(189, 89, 60, 0.15);
+  background: rgba(32, 64, 96, 0.06);
+  border: 1px solid rgba(32, 64, 96, 0.15);
   padding: 0.15rem 0.5rem;
   border-radius: 4px;
   transition: var(--transition-fast);
@@ -1792,6 +1792,22 @@ h1, h2, h3, h4 {
   .tech-tag {
     font-size: 0.65rem;
     padding: 0.12rem 0.4rem;
+  }
+}
+
+/* ==========================================================================
+   ACCESSIBILITY: REDUCED MOTION
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
 

@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-  
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   // ==========================================================================
   // 0. AIRPORT SPLIT-FLAP TICKER LOGO ANIMATION
   // ==========================================================================
@@ -8,6 +9,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ. ';
     flaps.forEach((flap, index) => {
       const target = flap.getAttribute('data-target');
+      if (prefersReducedMotion) {
+        flap.textContent = target;
+        return;
+      }
       let count = 0;
       const maxTicks = 6 + index * 2; // Staggered click duration per flap
 
@@ -74,8 +79,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Run animations slightly after load
   setTimeout(() => {
-    animateValue(messagesMetric, 0, 3000000, 1600, formatMessages);
-    animateValue(tpsMetric, 0, 180, 1200, formatTPS);
+    if (prefersReducedMotion) {
+      messagesMetric.textContent = formatMessages(3000000);
+      tpsMetric.textContent = formatTPS(180);
+    } else {
+      animateValue(messagesMetric, 0, 3000000, 1600, formatMessages);
+      animateValue(tpsMetric, 0, 180, 1200, formatTPS);
+    }
   }, 300);
 
 
@@ -349,7 +359,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let rotation = { lambda: -1.6, phi: 0.42 }; 
     let isDragging = false;
     let previousMousePosition = { x: 0, y: 0 };
-    let autoSpinActive = true;
+    let autoSpinActive = !prefersReducedMotion;
     let autoSpinTimer = null;
     let activeNodeId = 'pnw';
     let targetRotation = null;
@@ -478,11 +488,11 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    // Load offline TopoJSON map
-    fetch('land-110m.json')
-      .then(res => res.json())
+    // World topology is bundled as a global (land-110m.js) instead of fetched,
+    // so the globe also renders when the page is opened directly from the filesystem.
+    Promise.resolve(window.WORLD_TOPO)
       .then(worldData => {
-        const land = topojson.feature(worldData, worldData.objects.land);
+        const land = worldData ? topojson.feature(worldData, worldData.objects.land) : null;
 
         // D3 Orthographic projection linked to the canvas
         const projection = d3.geoOrthographic()
@@ -526,12 +536,14 @@ document.addEventListener('DOMContentLoaded', () => {
           ctx.stroke();
 
           // 3. Draw Stylized Continent Boundaries (warm ink sage/seafoam)
-          ctx.strokeStyle = '#76949f';
-          ctx.lineWidth = 1.25;
-          ctx.lineJoin = 'round';
-          ctx.beginPath();
-          path(land);
-          ctx.stroke();
+          if (land) {
+            ctx.strokeStyle = '#76949f';
+            ctx.lineWidth = 1.25;
+            ctx.lineJoin = 'round';
+            ctx.beginPath();
+            path(land);
+            ctx.stroke();
+          }
 
           ctx.restore();
 
@@ -663,8 +675,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         canvas.addEventListener('mousemove', (e) => {
           const rect = canvas.getBoundingClientRect();
-          const mouseX = e.clientX - rect.left;
-          const mouseY = e.clientY - rect.top;
+          // Canvas is CSS-scaled below 650px wide; map pointer coords into
+          // canvas coordinate space so pin hover/click detection stays accurate.
+          const scaleX = canvas.width / rect.width;
+          const scaleY = canvas.height / rect.height;
+          const mouseX = (e.clientX - rect.left) * scaleX;
+          const mouseY = (e.clientY - rect.top) * scaleY;
 
           if (isDragging) {
             const deltaX = e.clientX - previousMousePosition.x;
@@ -714,8 +730,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         canvas.addEventListener('click', (e) => {
           const rect = canvas.getBoundingClientRect();
-          const mouseX = e.clientX - rect.left;
-          const mouseY = e.clientY - rect.top;
+          const scaleX = canvas.width / rect.width;
+          const scaleY = canvas.height / rect.height;
+          const mouseX = (e.clientX - rect.left) * scaleX;
+          const mouseY = (e.clientY - rect.top) * scaleY;
 
           let clickedPin = null;
           pins.forEach(p => {
@@ -761,8 +779,10 @@ document.addEventListener('DOMContentLoaded', () => {
           
           // Tap pin detection on touch start
           const rect = canvas.getBoundingClientRect();
-          const touchX = touch.clientX - rect.left;
-          const touchY = touch.clientY - rect.top;
+          const scaleX = canvas.width / rect.width;
+          const scaleY = canvas.height / rect.height;
+          const touchX = (touch.clientX - rect.left) * scaleX;
+          const touchY = (touch.clientY - rect.top) * scaleY;
           
           let tappedPin = null;
           pins.forEach(p => {
