@@ -1384,9 +1384,20 @@ h1, h2, h3, h4 {
   margin: 0 auto;
   padding: 0 2rem;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 0.35rem;
   font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.footer-motto {
+  margin: 0;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-style: italic;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
   color: var(--text-muted);
 }
 
