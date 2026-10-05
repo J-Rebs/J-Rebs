@@ -368,12 +368,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Coordinates of Resume Pins (Longitude, Latitude) with custom label offsets for spacing
     const pins = [
-      { id: "pnw", name: "Pacific Northwest", lon: -122.0, lat: 44.5, label: "Origin", tag: "ORIGIN", meta: "📍 Roots", align: "right", dx: -8, dy: -2 },
-      { id: "notredame", name: "Notre Dame", lon: -84.5, lat: 39.8, label: "Notre Dame", tag: "UNDERGRADUATE", meta: "☘️ Economics & Systems Foundation", align: "left", dx: 8, dy: 10 },
-      { id: "madrid", name: "Madrid", lon: -3.7, lat: 40.4, label: "Madrid", tag: "FULBRIGHT SCHOLAR", meta: "🇪🇸 Systems of Language & Empathy", align: "left", dx: 8, dy: -4 },
-      { id: "chicago", name: "Chicago", lon: -88.0, lat: 42.8, label: "Chicago", tag: "FINANCIAL SYSTEMS", meta: "🏢 Systems of Financial Exchange", align: "right", dx: -8, dy: -8 },
-      { id: "nyc", name: "New York", lon: -74.0, lat: 40.7, label: "New York", tag: "COMPUTER SCIENCE", meta: "🎓 Systems of Digital Architecture", align: "left", dx: 8, dy: -4 },
-      { id: "dallas", name: "Dallas", lon: -96.8, lat: 32.7, label: "Dallas", tag: "PLATFORM SCALE", meta: "☁️ Systems of Cloud Scale & Reliability", align: "right", dx: -8, dy: 6 }
+      { id: "pnw", name: "Pacific Northwest", lon: -122.0, lat: 44.5, label: "Origin", tag: "ORIGIN", meta: "<svg class='icon'><use href='#i-pin'/></svg> Roots", align: "right", dx: -8, dy: -2 },
+      { id: "notredame", name: "Notre Dame", lon: -84.5, lat: 39.8, label: "Notre Dame", tag: "UNDERGRADUATE", meta: "<svg class='icon'><use href='#i-clover'/></svg> Economics & Systems Foundation", align: "left", dx: 8, dy: 10 },
+      { id: "madrid", name: "Madrid", lon: -3.7, lat: 40.4, label: "Madrid", tag: "FULBRIGHT SCHOLAR", meta: "<svg class='icon'><use href='#i-spain'/></svg> Systems of Language & Empathy", align: "left", dx: 8, dy: -4 },
+      { id: "chicago", name: "Chicago", lon: -88.0, lat: 42.8, label: "Chicago", tag: "FINANCIAL SYSTEMS", meta: "<svg class='icon'><use href='#i-building'/></svg> Systems of Financial Exchange", align: "right", dx: -8, dy: -8 },
+      { id: "nyc", name: "New York", lon: -74.0, lat: 40.7, label: "New York", tag: "COMPUTER SCIENCE", meta: "<svg class='icon'><use href='#i-gradcap'/></svg> Systems of Digital Architecture", align: "left", dx: 8, dy: -4 },
+      { id: "dallas", name: "Dallas", lon: -96.8, lat: 32.7, label: "Dallas", tag: "PLATFORM SCALE", meta: "<svg class='icon'><use href='#i-cloud'/></svg> Systems of Cloud Scale & Reliability", align: "right", dx: -8, dy: 6 }
     ];
 
     const nodeData = {
@@ -381,37 +381,37 @@ document.addEventListener('DOMContentLoaded', () => {
         tag: "ORIGIN",
         title: "Pacific Northwest",
         text: "I grew up in Portland and Seattle, spending my time rowing on the water, enjoying the mountains, and taking road trips down to California.",
-        meta: "📍 Roots"
+        meta: "<svg class='icon'><use href='#i-pin'/></svg> Roots"
       },
       notredame: {
         tag: "UNDERGRADUATE",
         title: "Notre Dame, Indiana",
         text: "Graduated Magna Cum Laude with a B.A. in International Economics from the University of Notre Dame. Studying international economic models taught me to see flow systems, transaction structures, and global dependencies—providing a rigorous analytical foundation that naturally carried over into computer science and platform engineering.",
-        meta: "☘️ Economics & Systems Foundation"
+        meta: "<svg class='icon'><use href='#i-clover'/></svg> Economics & Systems Foundation"
       },
       madrid: {
         tag: "FULBRIGHT SCHOLAR",
         title: "Madrid, Spain",
         text: "Fulbright Scholar teaching English and exploring Spain. Studying language taught me to understand how other people see things.",
-        meta: "🇪🇸 Systems of Language & Empathy"
+        meta: "<svg class='icon'><use href='#i-spain'/></svg> Systems of Language & Empathy"
       },
       chicago: {
         tag: "FINANCIAL SYSTEMS",
         title: "Chicago, Illinois",
         text: "Senior Transfer Pricing Consultant at Ernst & Young (EY). Analyzed global financial systems, intercompany cash flows, and cross-border transactions for Fortune 500 entities. Here, I pioneered my first revenue-generating automation scripts, sparking a lifelong fascination with ordering complex transaction pipelines.",
-        meta: "🏢 Systems of Financial Exchange"
+        meta: "<svg class='icon'><use href='#i-building'/></svg> Systems of Financial Exchange"
       },
       nyc: {
         tag: "COMPUTER SCIENCE",
         title: "New York, NY",
         text: "M.S. in Computer Science at Columbia University and Contract Engineer. Transitioned from financial systems to digital cloud architecture. Built Convex GitHub ingestion pipelines, contributed to open-source environmental simulation tools at Columbia DESDR, and learned to translate raw data flows into intelligible systems.",
-        meta: "🎓 Systems of Digital Architecture"
+        meta: "<svg class='icon'><use href='#i-gradcap'/></svg> Systems of Digital Architecture"
       },
       dallas: {
         tag: "PLATFORM SCALE",
         title: "Dallas, Texas",
         text: "Senior Associate Software Engineer at Capital One. Leading live production regional failover exercises, designing configuration-driven deduplication APIs, and migrating active repos with zero-downtime DynamoDB dual-write strategies. Here, I build resilient platforms processing 3M+ messages monthly.",
-        meta: "☁️ Systems of Cloud Scale & Reliability"
+        meta: "<svg class='icon'><use href='#i-cloud'/></svg> Systems of Cloud Scale & Reliability"
       }
     };
 
@@ -427,7 +427,7 @@ document.addEventListener('DOMContentLoaded', () => {
         detailsTag.textContent = data.tag;
         detailsTitle.textContent = data.title;
         detailsText.textContent = data.text;
-        detailsMeta.textContent = data.meta;
+        detailsMeta.innerHTML = data.meta;
 
         detailsCard.style.opacity = '1';
         detailsCard.style.transform = 'translateY(0)';
